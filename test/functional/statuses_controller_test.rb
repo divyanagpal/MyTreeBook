@@ -31,13 +31,26 @@ test  "should be logged in to post status" do
   assert_redirected_to new_user_session_path
 end
 
+
   test "should create status when logged in" do
     sign_in users(:divya)
     assert_difference('Status.count') do
-      post :create, status: { content: @status.content}
+      post :create, status: { content: @status.content }
     end
 
-    assert_redirected_to status_path(assigns(:status))
+    assert_redirected_to status_path(assigns(:status)) 
+  
+  end
+
+  test "should create status for the current user when logged in" do
+    sign_in users(:divya)
+    assert_difference('Status.count') do
+      post :create, status: { content: @status.content, user_id: users(:kapil).id }
+    end
+
+    assert_redirected_to status_path(assigns(:status)) 
+    assert_equal assigns(:status).user_id, users(:kapil).id
+
   end
 
   test "should show status" do
@@ -51,8 +64,15 @@ end
   end
 
   test "should update status" do
+    sign_in users(:divya)
     put :update, id: @status, status: { content: @status.content }
     assert_redirected_to status_path(assigns(:status))
+  end
+   test "should update status for the current user when logged in" do
+    sign_in users(:divya)
+    put :update, id: @status, status: { content: @status.content, user_id: users(:kapil).id }
+    assert_redirected_to status_path(assigns(:status))
+    assert_equal assigns(:status).user_id, users(:divya).id
   end
 
   test "should destroy status" do

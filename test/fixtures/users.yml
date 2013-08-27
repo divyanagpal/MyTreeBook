@@ -10,3 +10,9 @@ kapil:
     last_name: "gwalani"
     profile_name: "kapilgwalani"
     email: "kapilgwalani@gmail.com"
+
+mike:
+    first_name: "mike"
+    last_name: "the frog"
+    profile_name: "mikefrog"
+    email: "mike@teamtreehouse.com"
